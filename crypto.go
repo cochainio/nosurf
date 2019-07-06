@@ -19,7 +19,15 @@ func oneTimePad(data, key []byte) {
 	}
 }
 
-func maskToken(data []byte) []byte {
+func SetMaskTokenFunc(m func([]byte) []byte) {
+	maskToken = m
+}
+
+func SetUnmaskTokenFunc(m func([]byte) []byte) {
+	unmaskToken = m
+}
+
+var maskToken = func(data []byte) []byte {
 	if len(data) != tokenLength {
 		return nil
 	}
@@ -41,7 +49,7 @@ func maskToken(data []byte) []byte {
 	return result
 }
 
-func unmaskToken(data []byte) []byte {
+var unmaskToken = func(data []byte) []byte {
 	if len(data) != tokenLength*2 {
 		return nil
 	}

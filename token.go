@@ -78,6 +78,8 @@ func verifyToken(realToken, sentToken []byte) bool {
 
 	if realN == tokenLength && sentN == 2*tokenLength {
 		return verifyMasked(realToken, sentToken)
+	} else if realN == tokenLength && sentN == tokenLength  {
+		return subtle.ConstantTimeCompare(realToken, sentToken) == 1
 	}
 	return false
 }
